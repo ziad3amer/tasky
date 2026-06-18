@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
-import 'package:tasky/screens/home_screen.dart';
-import 'package:tasky/screens/main_screen.dart';
+import 'package:tasky/features/home/home_screen.dart';
+import 'package:tasky/features/navigation/main_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});

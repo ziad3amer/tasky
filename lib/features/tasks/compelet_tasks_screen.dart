@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/model/task_model.dart';
-import 'package:tasky/widgets/task_list_widget.dart';
+import 'package:tasky/components/task_list_widget.dart';
 
 class CompeletTasksScreen extends StatefulWidget {
   const CompeletTasksScreen({super.key});

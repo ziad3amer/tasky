@@ -10,8 +10,8 @@ import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/main.dart';
-import 'package:tasky/screens/user_detials_screen.dart';
-import 'package:tasky/screens/welcome_screen.dart';
+import 'package:tasky/features/profile/user_detials_screen.dart';
+import 'package:tasky/features/welcome/welcome_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
