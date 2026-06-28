@@ -16,12 +16,11 @@ class HomeController with ChangeNotifier {
   double percent = 0;
 
   init(){
-      loudUsername();
+      loudUserData();
       loudTask();
   }
-  void loudUsername() async {
+  void loudUserData() async {
     final pref = await SharedPreferences.getInstance();
-
     username = PreferencesMangar().getString(StorageKay.username);
     userImagePath = PreferencesMangar().getString(StorageKay.userImage);
     notifyListeners();
