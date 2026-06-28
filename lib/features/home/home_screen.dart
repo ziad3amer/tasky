@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/model/task_model.dart';
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loudUsername() async {
     final pref = await SharedPreferences.getInstance();
     setState(() {
-      username = PreferencesMangar().getString("username");
+      username = PreferencesMangar().getString(StorageKay.username);
       userImagePath = PreferencesMangar().getString("user_image");
     });
   }

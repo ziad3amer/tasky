@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
@@ -26,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CusttomSvgPicture.withColorFilter(
-                     path: "lib/assets/images/Vector (1).svg",
+                      path: "lib/assets/images/Vector (1).svg",
                       width: 42,
                       height: 42,
                     ),
@@ -45,11 +46,10 @@ class WelcomeScreen extends StatelessWidget {
                     Text(
                       "Welcome To Tasky ",
                       style: Theme.of(context).textTheme.displaySmall,
-
                     ),
                     SizedBox(width: 16),
                     CusttomSvgPicture.withColorFilter(
-                        path:"lib/assets/images/waving-hand-.svg",
+                      path: "lib/assets/images/waving-hand-.svg",
                       width: 28,
                       height: 28,
                     ),
@@ -64,7 +64,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 CusttomSvgPicture.withColorFilter(
-                    path:"lib/assets/images/pana.svg",
+                  path: "lib/assets/images/pana.svg",
                   width: 215,
                   height: 205,
                 ),
@@ -120,7 +120,7 @@ class WelcomeScreen extends StatelessWidget {
                   onPressed: () async {
                     if (_kay.currentState?.validate() ?? false) {
                       await PreferencesMangar().setString(
-                        "username",
+                        StorageKay.username,
                         controller.value.text,
                       );
 
