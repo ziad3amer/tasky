@@ -6,12 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/main.dart';
-import 'package:tasky/screens/user_detials_screen.dart';
-import 'package:tasky/screens/welcome_screen.dart';
+import 'package:tasky/features/profile/user_detials_screen.dart';
+import 'package:tasky/features/welcome/welcome_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -30,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _loudData() async {
     final pref = await SharedPreferences.getInstance();
     setState(() {
-      username = PreferencesMangar().getString("username") ?? "";
+      username = PreferencesMangar().getString(StorageKay.username,) ?? "";
       isLoading = false;
       motivationQuote =
           PreferencesMangar().getString("Motivation Quote") ??
@@ -182,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Divider(thickness: 1),
           ListTile(
             onTap: () async {
-              PreferencesMangar().remove("username");
+              PreferencesMangar().remove(StorageKay.username);
               PreferencesMangar().remove("Motivation Quote");
               PreferencesMangar().remove("tasks");
               Navigator.pushAndRemoveUntil(

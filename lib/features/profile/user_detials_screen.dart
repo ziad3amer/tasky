@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
 
@@ -76,7 +77,7 @@ class _UserDetialsScreenState extends State<UserDetialsScreen> {
                 onPressed: () async {
                   if (_Key.currentState!.validate()) {
                     await PreferencesMangar().setString(
-                      "username",
+                      StorageKay.username,
                       userNameController.value.text,
                     );
                     await PreferencesMangar().setString(
