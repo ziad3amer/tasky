@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/components/task_list_widget.dart';
@@ -23,7 +24,7 @@ class _CompeletTasksScreenState extends State<CompeletTasksScreen> {
   }
 
   void _loudTask() async {
-    final finalTask = await PreferencesMangar().getString("tasks");
+    final finalTask = await PreferencesMangar().getString(StorageKay.tasks);
 
     if (finalTask != null) {
       final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
@@ -47,7 +48,7 @@ class _CompeletTasksScreenState extends State<CompeletTasksScreen> {
 
   _deleteTask(int? id) async {
     List<TaskModel> tasks=[];
-    final finalTask = PreferencesMangar().getString("tasks");
+    final finalTask = PreferencesMangar().getString(StorageKay.tasks);
     if(id==null)return;
     if (finalTask != null) {
       final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
@@ -61,7 +62,7 @@ class _CompeletTasksScreenState extends State<CompeletTasksScreen> {
       final updatedTask = tasks.map(
             (element) => element.toJson(),
       ).toList();
-      PreferencesMangar().setString("tasks", jsonEncode(updatedTask));
+      PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updatedTask));
     }
   }
 
@@ -90,7 +91,7 @@ class _CompeletTasksScreenState extends State<CompeletTasksScreen> {
                     });
 
                     final pref = await SharedPreferences.getInstance();
-                    final allData = pref.getString("tasks");
+                    final allData = pref.getString(StorageKay.tasks);
 
                     if (allData != null) {
                       List<TaskModel> allDataList =
@@ -106,7 +107,7 @@ class _CompeletTasksScreenState extends State<CompeletTasksScreen> {
                         allDataList[newIndex] = completeTasks[index!];
 
                         await pref.setString(
-                          "tasks",
+                          StorageKay.tasks,
                           jsonEncode(
                             allDataList.map((e) => e.toMap()).toList(),
                           ),

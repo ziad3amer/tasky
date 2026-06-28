@@ -60,7 +60,7 @@ class _UserDetialsScreenState extends State<UserDetialsScreen> {
               CusttomTextFormField(
                 controller: motivationQuoteController,
                 hintText: 'One task at a time. One step closer.',
-                title: 'Motivation Quote',
+                title: StorageKay.MotivationQuote,
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -81,7 +81,7 @@ class _UserDetialsScreenState extends State<UserDetialsScreen> {
                       userNameController.value.text,
                     );
                     await PreferencesMangar().setString(
-                      "Motivation Quote",
+                      StorageKay.MotivationQuote,
                       motivationQuoteController.value.text,
                     );
                     Navigator.pop(context, true);

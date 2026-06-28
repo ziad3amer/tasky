@@ -2,6 +2,7 @@ import 'dart:convert' show jsonDecode, jsonEncode;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/enums/task_item_actions_enum.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
@@ -216,7 +217,7 @@ class TaskItemWidget extends StatelessWidget {
                       onPressed: () async {
                         if (_kay.currentState?.validate() ?? false) {
                           final taskJson = await PreferencesMangar().getString(
-                            "tasks",
+                            StorageKay.tasks,
                           );
 
                           List<dynamic> listTasks = [];
@@ -238,7 +239,7 @@ class TaskItemWidget extends StatelessWidget {
 
                           final taskEncode = jsonEncode(listTasks);
                           await PreferencesMangar().setString(
-                            "tasks",
+                            StorageKay.tasks,
                             taskEncode,
                           );
 

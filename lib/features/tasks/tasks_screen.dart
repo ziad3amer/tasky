@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/features/tasks/tasks_screen.dart';
@@ -31,7 +32,7 @@ class _TasksScreenState extends State<TasksScreen> {
       isLoading = true;
     });
 
-    final finalTask = PreferencesMangar().getString("tasks");
+    final finalTask = PreferencesMangar().getString(StorageKay.tasks);
 
     if (finalTask != null) {
       final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
@@ -56,7 +57,7 @@ class _TasksScreenState extends State<TasksScreen> {
     });
 
     final updatedTask = todoTasks.map((element) => element.toJson()).toList();
-    PreferencesMangar().setString("tasks", jsonEncode(updatedTask));
+    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updatedTask));
   }
 
   @override
@@ -88,7 +89,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         todoTasks[index!].isDone = value ?? false;
                       });
 
-                      final allData = PreferencesMangar().getString("tasks");
+                      final allData = PreferencesMangar().getString(StorageKay.tasks);
                       if (allData != null) {
                         List<TaskModel> allDataList =
                             (jsonDecode(allData) as List)
@@ -98,7 +99,7 @@ class _TasksScreenState extends State<TasksScreen> {
                           (e) => e.taskName == todoTasks[index!].taskName,
                         );
                         allDataList[newIndex] = todoTasks[index!];
-                        PreferencesMangar().setString("tasks", jsonEncode(allDataList));
+                        PreferencesMangar().setString(StorageKay.tasks, jsonEncode(allDataList));
                         _loudTask();
                       }
                     },

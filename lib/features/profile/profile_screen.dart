@@ -34,9 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       username = PreferencesMangar().getString(StorageKay.username,) ?? "";
       isLoading = false;
       motivationQuote =
-          PreferencesMangar().getString("Motivation Quote") ??
+          PreferencesMangar().getString(StorageKay.MotivationQuote) ??
               "One task at a time. One step closer.";
-      userImagePath = PreferencesMangar().getString("user_image");
+      userImagePath = PreferencesMangar().getString(StorageKay.userImage);
     });
   }
 
@@ -184,8 +184,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             onTap: () async {
               PreferencesMangar().remove(StorageKay.username);
-              PreferencesMangar().remove("Motivation Quote");
-              PreferencesMangar().remove("tasks");
+              PreferencesMangar().remove(StorageKay.MotivationQuote);
+              PreferencesMangar().remove(StorageKay.tasks);
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -215,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final newFile = await File(file.path).copy(
         "${appDir.path}/${file.name}");
 
-    PreferencesMangar().setString("user_image", newFile.path);
+    PreferencesMangar().setString(StorageKay.userImage, newFile.path);
   }
 }
   void showImageSourceDialog(BuildContext context, Function(XFile)selectedFile) {

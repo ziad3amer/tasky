@@ -23,13 +23,13 @@ class HomeController with ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
 
     username = PreferencesMangar().getString(StorageKay.username);
-    userImagePath = PreferencesMangar().getString("user_image");
+    userImagePath = PreferencesMangar().getString(StorageKay.userImage);
     notifyListeners();
   }
 
   void loudTask() async {
     final pref = await SharedPreferences.getInstance();
-    final finalTask = pref.getString("tasks");
+    final finalTask = pref.getString(StorageKay.tasks);
 
     if (finalTask != null) {
       final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
@@ -54,7 +54,7 @@ class HomeController with ChangeNotifier {
     calculatePercent();
 
     final updatedTask = tasks.map((element) => element.toMap()).toList();
-    PreferencesMangar().setString("tasks", jsonEncode(updatedTask));
+    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updatedTask));
     notifyListeners();
   }
 
@@ -64,7 +64,7 @@ class HomeController with ChangeNotifier {
     calculatePercent();
     //todo : makeshared method.
     final updatedTask = tasks.map((element) => element.toJson()).toList();
-    PreferencesMangar().setString("tasks", jsonEncode(updatedTask));
+    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updatedTask));
     notifyListeners();
   }
 }
