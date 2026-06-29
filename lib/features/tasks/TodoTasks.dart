@@ -8,7 +8,7 @@ import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/components/task_list_widget.dart';
 
-import 'tasks_controller.dart';
+import 'controller/tasks_controller.dart';
 
 class TodoTasks extends StatelessWidget {
    TodoTasks({super.key});
