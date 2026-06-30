@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/widgets/custtom_check_box.dart';
 import 'package:tasky/features/home/home_controller.dart';
+import 'package:tasky/features/tasks/controller/tasks_controller.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/components/task_item_widget.dart';
 
@@ -15,8 +16,8 @@ class SliverTaskListWidget extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context,HomeController controller , Widget? child) {
+    return Consumer<TasksController>(
+      builder: (BuildContext context,TasksController controller , Widget? child) {
         final tasksList= controller.tasks;
         return tasksList.isEmpty
             ? SliverToBoxAdapter(
@@ -40,7 +41,7 @@ class SliverTaskListWidget extends StatelessWidget {
 
                 controller.deleteTask(id);
               }, onEdit: (){
-                controller.loudTask();
+                controller.init();
 
               },
               );

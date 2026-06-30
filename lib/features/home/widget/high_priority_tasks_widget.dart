@@ -7,6 +7,7 @@ import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custtom_check_box.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/features/home/home_controller.dart';
+import 'package:tasky/features/tasks/controller/tasks_controller.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/features/tasks/high_priority_screen.dart';
 
@@ -18,8 +19,8 @@ class HighPriorityTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller, Widget? child) {
+    return Consumer<TasksController>(
+      builder: (BuildContext context, TasksController controller, Widget? child) {
         final tasksList =controller.tasks;
         return Container(
           decoration: BoxDecoration(
@@ -55,7 +56,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                               final index = tasksList.indexWhere((e) {
                                 return e.id == element.id;
                               });
-                              controller.doneTask(value, index);
+                              controller.doneHighPriorityTasks(value, index);
 
                             },
                           ),
@@ -87,7 +88,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                         },
                       ),
                     );
-                    controller.loudTask();
+                    controller.init();
                   },
                   child: Container(
                     height: 56,

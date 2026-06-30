@@ -16,44 +16,37 @@ class HighPriorityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TasksController>(
-      create: (_) =>TasksController()..init(),
-      child: Builder(
-        builder: (BuildContext context) {
-          final controller = context.read<TasksController>();
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "High Priority Tasks",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: controller.isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : Consumer<TasksController>(
-                    builder: (BuildContext context, value, Widget? child) {
-                      return TaskListWidget(
-                        tasks: value.HighPriorityTasks,
-                        onTap: (value, index) async {
-                          controller.doneHighPriorityTasks(value, index);
+    final controller = context.read<TasksController>();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "High Priority Tasks",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: controller.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Consumer<TasksController>(
+          builder: (BuildContext context, value, Widget? child) {
+            return TaskListWidget(
+              tasks: value.HighPriorityTasks,
+              onTap: (value, index) async {
+                controller.doneHighPriorityTasks(value, index);
 
-                        },
-                        emptyMessage: 'NO Taskes Found',
-                        onDelete: (int? id) {
-                          controller.deleteTask(id);
+              },
+              emptyMessage: 'NO Taskes Found',
+              onDelete: (int? id) {
+                controller.deleteTask(id);
 
-                        }, onEdit: (){
-                        controller.init();
-                      },
-                      );
-                    },
+              }, onEdit: (){
+              controller.init();
+            },
+            );
+          },
 
-                  ),
-            ),
-          );
-        },
+        ),
       ),
     );
   }

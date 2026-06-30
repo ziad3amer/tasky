@@ -10,6 +10,7 @@ import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/features/home/home_controller.dart';
+import 'package:tasky/features/tasks/controller/tasks_controller.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/features/add_task/add_task_screen.dart';
 import 'package:tasky/features/home/widget/achieved_tasks_widget.dart';
@@ -45,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
                 if (result != null && result)
-                  controllerContext.read<HomeController>().loudTask();
+                  controllerContext.read<TasksController>().init();
               },
             );
           },

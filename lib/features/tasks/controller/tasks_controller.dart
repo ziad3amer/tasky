@@ -15,6 +15,9 @@ class TasksController with ChangeNotifier {
   List<TaskModel> completeTasks = [];
   List<TaskModel> todoTasks = [];
   List<TaskModel> HighPriorityTasks = [];
+  int totalTask = 0;
+  int totaldoneTasks = 0;
+  double percent = 0;
 
   void init() {
     _loudTasks();
@@ -39,19 +42,27 @@ class TasksController with ChangeNotifier {
 
 
       HighPriorityTasks = HighPriorityTasks.reversed.toList();
-      // calculatePercent();
+      calculatePercent();
     }
     isLoading = false;
     notifyListeners();
   }
 
   void doneTask(bool? value, int? index) async {
-    if (index == null) return;
+    tasks[index!].isDone = value ?? false;
+    calculatePercent();
+    final updateTask=tasks.map((element)=>element.toJson()).toList();
+    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updateTask));
+    notifyListeners();
+  }
 
+  void doneTodoTask(bool? value, int? index) async {
+    if (index == null) return;
+    calculatePercent();
     todoTasks[index].isDone = value ?? false;
 
     final int newIndex = tasks.indexWhere(
-      (e) => e.taskName == todoTasks[index].taskName,
+          (e) => e.taskName == todoTasks[index].taskName,
     );
     tasks[newIndex] = todoTasks[index];
     PreferencesMangar().setString(StorageKay.tasks, jsonEncode(tasks));
@@ -87,13 +98,23 @@ class TasksController with ChangeNotifier {
     if (id == null) return;
     tasks.removeWhere((e) => e.id == id);
 
-    todoTasks.removeWhere((task) => task.id == id);
-    completeTasks.removeWhere((task) => task.id == id);
-    HighPriorityTasks.removeWhere((task) => task.id == id);
-
+    // todoTasks.removeWhere((task) => task.id == id);
+    // completeTasks.removeWhere((task) => task.id == id);
+    // HighPriorityTasks.removeWhere((task) => task.id == id);
+    _loudTasks();
+    calculatePercent();
 
     final updatedTask = todoTasks.map((element) => element.toJson()).toList();
     PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updatedTask));
+
+    notifyListeners();
+  }
+
+  calculatePercent() {
+    totalTask = tasks.length;
+    totaldoneTasks = tasks.where((e) => e.isDone).length;
+    percent = totalTask == 0 ? 0 : totaldoneTasks / totalTask;
+
     notifyListeners();
   }
 }

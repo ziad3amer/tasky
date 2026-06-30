@@ -13,47 +13,40 @@ class CompeletTasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TasksController>(
-      create: (BuildContext context) => TasksController()..init(),
-      child: Builder(
-        builder: (BuildContext context) {
-          final controller = context.read<TasksController>();
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  "Complete Tasks",
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ),
+    final controller = context.read<TasksController>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            "Complete Tasks",
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+        ),
 
-              Expanded(
-                child: controller.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : Consumer<TasksController>(
-                        builder: (BuildContext context, value, Widget? child) {
-                          return TaskListWidget(
-                            tasks: value.completeTasks,
-                            emptyMessage: "NO Taskes Found",
-                            onTap: (value, index) async {
-                              controller.doneCompleteTask(value, index);
-                            },
-                            onDelete: (int? id) {
-                              controller.deleteTask(id);
-                            },
-                            onEdit: () {
-                              controller.init();
-                            },
-                          );
-                        },
-                      ),
-              ),
-            ],
-          );
-        },
-      ),
+        Expanded(
+          child: controller.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Consumer<TasksController>(
+            builder: (BuildContext context, value, Widget? child) {
+              return TaskListWidget(
+                tasks: value.completeTasks,
+                emptyMessage: "NO Taskes Found",
+                onTap: (value, index) async {
+                  controller.doneCompleteTask(value, index);
+                },
+                onDelete: (int? id) {
+                  controller.deleteTask(id);
+                },
+                onEdit: () {
+                  controller.init();
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
@@ -7,6 +8,7 @@ import 'package:tasky/core/theme/light_theme.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/features/home/home_screen.dart';
 import 'package:tasky/features/navigation/main_screen.dart';
+import 'package:tasky/features/tasks/controller/tasks_controller.dart';
 import 'package:tasky/features/welcome/welcome_screen.dart';
 
 void main() async {
@@ -28,13 +30,16 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: ThemeController.themeNotifier,
       builder: (context, ThemeMode value, Widget? child) {
-        return MaterialApp(
-          title: 'Tasky',
-          debugShowCheckedModeBanner: false,
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: value,
-        home: username == null ? WelcomeScreen() : MainScreen(),
+        return ChangeNotifierProvider<TasksController>(
+          create: (BuildContext context) =>TasksController()..init(),
+          child: MaterialApp(
+            title: 'Tasky',
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: value,
+          home: username == null ? WelcomeScreen() : MainScreen(),
+          ),
         );
       },
     );
