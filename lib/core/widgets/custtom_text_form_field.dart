@@ -25,7 +25,6 @@ class CusttomTextFormField extends StatelessWidget {
         Text(
           title,
           style:Theme.of(context).textTheme.titleMedium,
-
         ),
         SizedBox(height: 8),
         TextFormField(
