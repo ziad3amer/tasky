@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/widgets/custtom_check_box.dart';
 import 'package:tasky/model/task_model.dart';
 import 'package:tasky/components/task_item_widget.dart';
@@ -37,7 +38,7 @@ class TaskListWidget extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: tasks.length,
-            padding: EdgeInsets.only(bottom: 60),
+            padding: EdgeInsets.only(bottom: AppSizes.ph60),
             itemBuilder: (BuildContext context, int index) {
               return  TaskItemWidget(
                 model: tasks[index],
@@ -51,7 +52,7 @@ class TaskListWidget extends StatelessWidget {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 8);
+              return  SizedBox(height: AppSizes.ph8);
             },
           );
   }

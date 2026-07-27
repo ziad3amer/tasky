@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
@@ -52,7 +53,7 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding:  EdgeInsets.all(AppSizes.pw16),
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -114,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: AppSizes.h16),
 
                     Text(
                       "Yuhuu ,Your work Is ",
@@ -129,15 +130,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                         CusttomSvgPicture.withColorFilter(
                           path: "lib/assets/images/waving-hand-.svg",
-                          width: 32,
-                          height: 32,
+                          width: AppSizes.w32,
+                          height: AppSizes.h32,
                         ),
                       ],
                     ),
                     //Achieved Tasks
-                    SizedBox(height: 16),
+                    SizedBox(height: AppSizes.ph16),
                     AchievedTasksWidget(),
-                    SizedBox(height: 8),
+                    SizedBox(height: AppSizes.ph8),
                     HighPriorityTasksWidget(),
                     Padding(
                       padding: const EdgeInsets.only(top: 24.0, bottom: 16),

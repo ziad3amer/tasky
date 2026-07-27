@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/widgets/custtom_check_box.dart';
 import 'package:tasky/features/home/home_controller.dart';
 import 'package:tasky/features/tasks/controller/tasks_controller.dart';
@@ -47,7 +48,7 @@ class SliverTaskListWidget extends StatelessWidget {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 8);
+              return  SizedBox(height: AppSizes.ph8);
             },
           ),
         );

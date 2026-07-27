@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
@@ -50,11 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return isLoading
         ? Padding(
-      padding: const EdgeInsets.all(16),
+      padding:  EdgeInsets.all(AppSizes.pw16),
       child: Center(child: CircularProgressIndicator()),
     )
         : Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding:  EdgeInsets.all(AppSizes.pw16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -65,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 .textTheme
                 .labelSmall,
           ),
-          SizedBox(height: 16),
+          SizedBox(height: AppSizes.ph16),
           Center(
             child: Column(
               children: [
@@ -76,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       backgroundImage: userImagePath == null
                           ? AssetImage('lib/assets/images/person.png')
                           : FileImage(File(userImagePath!)),
-                      radius: 60,
+                      radius: AppSizes.r60,
                       backgroundColor: Colors.transparent,
                     ),
                     GestureDetector(
@@ -89,10 +90,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         });
                       },
                       child: Container(
-                        width: 45,
-                        height: 45,
+                        width: AppSizes.w45,
+                        height: AppSizes.h45,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(AppSizes.r100),
                           color: Theme
                               .of(
                             context,
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: AppSizes.ph8),
                 Text(
                   username,
                   style: Theme
@@ -123,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: AppSizes.ph24),
 
           Text(
             "Profile Info",
@@ -133,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 .labelSmall,
           ),
 
-          SizedBox(height: 24),
+          SizedBox(height:AppSizes.ph24),
           ListTile(
             onTap: () async {
               final result = await Navigator.push(
@@ -239,11 +240,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 }
               },
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(AppSizes.pw16),
               child: Row(
                 children: [
                   Icon(Icons.camera_alt),
-                  SizedBox(width: 8),
+                  SizedBox(width: AppSizes.pw8),
                   Text("Camera"),
                 ],
               ),
@@ -258,11 +259,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   selectedFile(image);
                 }
               },
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(AppSizes.pw16),
               child: Row(
                 children: [
                   Icon(Icons.photo_library),
-                  SizedBox(width: 8),
+                  SizedBox(width: AppSizes.pw8),
                   Text("Gallery"),
                 ],
               ),

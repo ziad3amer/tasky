@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
@@ -12,7 +13,6 @@ import 'package:tasky/model/task_model.dart';
 class AddTaskScreen extends StatelessWidget {
   AddTaskScreen({super.key});
 
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +25,19 @@ class AddTaskScreen extends StatelessWidget {
             appBar: AppBar(title: Text("New Task")),
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+                padding:  EdgeInsets.symmetric(
+                  horizontal: AppSizes.w16,
+                  vertical: AppSizes.h8,
                 ),
                 child: Form(
-                  key: _key,
+                  key: controller.key,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         decoration: BoxDecoration(
                           color: Color(0xFF282828),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(AppSizes.r12),
                         ),
                       ),
                       CusttomTextFormField(

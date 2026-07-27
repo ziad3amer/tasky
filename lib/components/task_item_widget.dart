@@ -2,6 +2,7 @@ import 'dart:convert' show jsonDecode, jsonEncode;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/enums/task_item_actions_enum.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
@@ -28,12 +29,12 @@ class TaskItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: AppSizes.h56,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppSizes.r20),
         border: Border.all(
           color: ThemeController.isDark()
               ? Colors.transparent
@@ -42,12 +43,12 @@ class TaskItemWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(width: 8),
+          SizedBox(width: AppSizes.pw8),
           CusttomCheckBox(
             value: model.isDone,
             onChanged: (bool? value) => onChanged(value),
           ),
-          SizedBox(width: 16),
+          SizedBox(width: AppSizes.pw16),
 
           Expanded(
             child: Column(
@@ -67,7 +68,7 @@ class TaskItemWidget extends StatelessWidget {
                     model.taskDescription,
                     style: TextStyle(
                       color: Color(0xFFC6C6C6),
-                      fontSize: 14,
+                      fontSize: AppSizes.sp14,
                       overflow: TextOverflow.ellipsis,
                     ),
                     maxLines: 1,
@@ -160,7 +161,7 @@ class TaskItemWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(height: AppSizes.ph30,),
                     Container(
                       decoration: BoxDecoration(
                         color: Color(0xFF282828),
@@ -177,7 +178,7 @@ class TaskItemWidget extends StatelessWidget {
                         }
                       },
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: AppSizes.ph20),
                     CusttomTextFormField(
                       controller: taskDescriptionController,
                       maxLines: 5,
@@ -192,7 +193,7 @@ class TaskItemWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: AppSizes.ph20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

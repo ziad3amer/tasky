@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
-import 'package:tasky/features/home/home_screen.dart';
 import 'package:tasky/features/navigation/main_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -143,7 +140,7 @@ class WelcomeScreen extends StatelessWidget {
                     "Let’s Get Started",
                     style: TextStyle(color: Color.fromRGBO(225, 252, 252, 1)),
                   ),
-                  style: ElevatedButton.styleFrom(fixedSize: Size(340, 40)),
+                   style: ElevatedButton.styleFrom(fixedSize: Size(340, 40)),
                 ),
               ],
             ),

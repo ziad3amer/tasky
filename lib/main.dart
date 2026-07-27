@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/dark_theme.dart';
 import 'package:tasky/core/theme/light_theme.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
-import 'package:tasky/features/home/home_screen.dart';
 import 'package:tasky/features/navigation/main_screen.dart';
 import 'package:tasky/features/tasks/controller/tasks_controller.dart';
 import 'package:tasky/features/welcome/welcome_screen.dart';
@@ -34,15 +32,19 @@ class MyApp extends StatelessWidget {
         return ChangeNotifierProvider<TasksController>(
           create: (BuildContext context) =>TasksController()..init(),
           child: ScreenUtilInit(
-            designSize: Size(375, 889),
-            child: MaterialApp(
-              title: 'Tasky',
-              debugShowCheckedModeBanner: false,
-              theme: lightTheme,
-              darkTheme: darkTheme,
-              themeMode: value,
-            home: username == null ? WelcomeScreen() : MainScreen(),
-            ),
+            designSize: const Size(375, 889),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                title: 'Tasky',
+                debugShowCheckedModeBanner: false,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: value,
+                home: username == null ? WelcomeScreen() : MainScreen(),
+              );
+            },
           ),
         );
       },
