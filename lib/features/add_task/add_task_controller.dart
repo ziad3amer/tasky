@@ -1,6 +1,7 @@
 import 'dart:convert' show jsonDecode, jsonEncode;
 
 import 'package:flutter/cupertino.dart';
+import 'package:tasky/core/services/file_storage_manager.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 
 import '../../core/constances/storage_kay.dart' show StorageKay;
@@ -28,6 +29,8 @@ class AddTaskController with ChangeNotifier {
         isHighPriority: isHighPriority,
         id: id,
       );
+
+      await FileStorageManager().SaveTasks(listTasks);
 
       listTasks.add(model.toJson());
       final taskEncode = jsonEncode(listTasks);

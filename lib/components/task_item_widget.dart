@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/enums/task_item_actions_enum.dart';
+import 'package:tasky/core/services/file_storage_manager.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
@@ -161,7 +162,7 @@ class TaskItemWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: AppSizes.ph30,),
+                    SizedBox(height: AppSizes.ph30),
                     Container(
                       decoration: BoxDecoration(
                         color: Color(0xFF282828),
@@ -199,8 +200,7 @@ class TaskItemWidget extends StatelessWidget {
                       children: [
                         Text(
                           "High Priority",
-                          style:Theme.of(context).textTheme.titleMedium,
-
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Switch(
                           value: isHighPriority,
@@ -217,20 +217,15 @@ class TaskItemWidget extends StatelessWidget {
                       style: ElevatedButton.styleFrom(fixedSize: Size(450, 40)),
                       onPressed: () async {
                         if (_kay.currentState?.validate() ?? false) {
-                          final taskJson = await PreferencesMangar().getString(
-                            StorageKay.tasks,
-                          );
-
-                          List<dynamic> listTasks = [];
-                          if (taskJson != null) {
-                            listTasks = jsonDecode(taskJson);
-                          }
+                          List<dynamic> listTasks = await FileStorageManager()
+                              .loadTasks();
                           TaskModel newModel = TaskModel(
                             id: model.id,
                             taskName: taskNameController.text,
                             taskDescription: taskDescriptionController.text,
                             isHighPriority: isHighPriority,
-                            isDone: model.isDone);
+                            isDone: model.isDone,
+                          );
 
                           final item = listTasks.firstWhere(
                             (e) => e['id'] == model.id,

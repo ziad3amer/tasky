@@ -51,11 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return isLoading
         ? Padding(
-      padding:  EdgeInsets.all(AppSizes.pw16),
+      padding: EdgeInsets.all(AppSizes.pw16),
       child: Center(child: CircularProgressIndicator()),
     )
         : Padding(
-      padding:  EdgeInsets.all(AppSizes.pw16),
+      padding: EdgeInsets.all(AppSizes.pw16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 .labelSmall,
           ),
 
-          SizedBox(height:AppSizes.ph24),
+          SizedBox(height: AppSizes.ph24),
           ListTile(
             onTap: () async {
               final result = await Navigator.push(
@@ -219,57 +219,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
     PreferencesMangar().setString(StorageKay.userImage, newFile.path);
   }
 }
-  void showImageSourceDialog(BuildContext context, Function(XFile)selectedFile) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text(
-            "Choose Image source",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          children: [
-            SimpleDialogOption(
-              onPressed: () async {
-                Navigator.pop(context);
-                XFile? image = await ImagePicker().pickImage(
-                  source: ImageSource.camera,
-                );
-                if (image != null) {
-                  selectedFile(image);
 
-                }
-              },
-              padding: EdgeInsets.all(AppSizes.pw16),
-              child: Row(
-                children: [
-                  Icon(Icons.camera_alt),
-                  SizedBox(width: AppSizes.pw8),
-                  Text("Camera"),
-                ],
-              ),
+void showImageSourceDialog(BuildContext context, Function(XFile)selectedFile) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        title: Text(
+          "Choose Image source",
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleMedium,
+        ),
+        children: [
+          SimpleDialogOption(
+            onPressed: () async {
+              Navigator.pop(context);
+              XFile? image = await ImagePicker().pickImage(
+                source: ImageSource.camera,
+              );
+              if (image != null) {
+                selectedFile(image);
+              }
+            },
+            padding: EdgeInsets.all(AppSizes.pw16),
+            child: Row(
+              children: [
+                Icon(Icons.camera_alt),
+                SizedBox(width: AppSizes.pw8),
+                Text("Camera"),
+              ],
             ),
-            SimpleDialogOption(
-              onPressed: () async {
-                Navigator.pop(context);
-                XFile? image = await ImagePicker().pickImage(
-                  source: ImageSource.gallery,
-                );
-                if (image != null) {
-                  selectedFile(image);
-                }
-              },
-              padding: EdgeInsets.all(AppSizes.pw16),
-              child: Row(
-                children: [
-                  Icon(Icons.photo_library),
-                  SizedBox(width: AppSizes.pw8),
-                  Text("Gallery"),
-                ],
-              ),
+          ),
+          SimpleDialogOption(
+            onPressed: () async {
+              Navigator.pop(context);
+              XFile? image = await ImagePicker().pickImage(
+                source: ImageSource.gallery,
+              );
+              if (image != null) {
+                selectedFile(image);
+              }
+            },
+            padding: EdgeInsets.all(AppSizes.pw16),
+            child: Row(
+              children: [
+                Icon(Icons.photo_library),
+                SizedBox(width: AppSizes.pw8),
+                Text("Gallery"),
+              ],
             ),
-          ],
-        );
-      },
-    );
-  }
+          ),
+        ],
+      );
+    },
+  );
+}

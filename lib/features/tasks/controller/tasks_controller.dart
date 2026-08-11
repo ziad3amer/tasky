@@ -1,11 +1,9 @@
 import 'dart:convert' show jsonDecode, jsonEncode;
-
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
-import 'package:tasky/core/services/preferences_mangar.dart';
+import 'package:tasky/core/services/file_storage_manager.dart';
 import 'package:tasky/model/task_model.dart';
-
 import '../../../core/constances/storage_kay.dart' show StorageKay;
 
 class TasksController with ChangeNotifier {
@@ -25,34 +23,36 @@ class TasksController with ChangeNotifier {
 
   void _loudTasks() async {
     isLoading = true;
-    final finalTask = PreferencesMangar().getString(StorageKay.tasks);
 
-    if (finalTask != null) {
-      final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
+    final tasksData = await FileStorageManager().loadTasks();
 
-      tasks = taskAfterDecode
-          .map((element) => TaskModel.fromjson(element))
-          .toList();
-      todoTasks = tasks.where((element) => !element.isDone).toList();
-      completeTasks = tasks.where((element) => element.isDone).toList();
+    tasks = tasksData.map((element) => TaskModel.fromjson(element)).toList();
 
-      HighPriorityTasks = tasks.where((element) => element.isHighPriority).toList();
+    _loadData();
+    calculatePercent();
 
-
-
-
-      HighPriorityTasks = HighPriorityTasks.reversed.toList();
-      calculatePercent();
-    }
     isLoading = false;
     notifyListeners();
+  }
+
+  void _loadData() async {
+    await FileStorageManager().loadTasks();
+    todoTasks = tasks.where((element) => !element.isDone).toList();
+    completeTasks = tasks.where((element) => element.isDone).toList();
+
+    HighPriorityTasks = tasks
+        .where((element) => element.isHighPriority)
+        .toList();
+
+    HighPriorityTasks = HighPriorityTasks.reversed.toList();
   }
 
   void doneTask(bool? value, int? index) async {
     tasks[index!].isDone = value ?? false;
     calculatePercent();
-    final updateTask=tasks.map((element)=>element.toJson()).toList();
-    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updateTask));
+    final updatedTask = tasks.map((element) => element.toJson()).toList();
+    FileStorageManager().SaveTasks(updatedTask);
+
     notifyListeners();
   }
 
@@ -62,10 +62,10 @@ class TasksController with ChangeNotifier {
     todoTasks[index].isDone = value ?? false;
 
     final int newIndex = tasks.indexWhere(
-          (e) => e.taskName == todoTasks[index].taskName,
+      (e) => e.taskName == todoTasks[index].taskName,
     );
     tasks[newIndex] = todoTasks[index];
-    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(tasks));
+    FileStorageManager().SaveTasks(tasks);
     _loudTasks();
   }
 
@@ -78,19 +78,21 @@ class TasksController with ChangeNotifier {
       (e) => e.taskName == completeTasks[index].taskName,
     );
     tasks[newIndex] = completeTasks[index];
-    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(tasks));
+    FileStorageManager().SaveTasks(tasks);
     _loudTasks();
   }
+
   void doneHighPriorityTasks(bool? value, int? index) async {
     if (index == null) return;
 
     HighPriorityTasks[index].isDone = value ?? false;
 
     final int newIndex = tasks.indexWhere(
-          (e) => e.taskName == HighPriorityTasks[index].taskName,
+      (e) => e.taskName == HighPriorityTasks[index].taskName,
     );
     tasks[newIndex] = HighPriorityTasks[index];
-    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(tasks));
+
+    FileStorageManager().SaveTasks(tasks);
     _loudTasks();
   }
 
@@ -105,7 +107,7 @@ class TasksController with ChangeNotifier {
     calculatePercent();
 
     final updatedTask = todoTasks.map((element) => element.toJson()).toList();
-    PreferencesMangar().setString(StorageKay.tasks, jsonEncode(updatedTask));
+    FileStorageManager().SaveTasks(updatedTask);
 
     notifyListeners();
   }

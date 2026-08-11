@@ -42,6 +42,7 @@ ThemeData lightTheme = ThemeData(
       textStyle: TextStyle(fontSize:AppSizes.sp14, fontWeight: FontWeight.w500),
       //minimumSize: Size.fromHeight(40),
     ),
+
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(foregroundColor: Colors.black),
