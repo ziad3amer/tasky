@@ -2,7 +2,7 @@ import 'dart:convert' show jsonDecode, jsonEncode;
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
-import 'package:tasky/core/services/file_storage_manager.dart';
+import 'package:tasky/core/services/hive_storage_manager.dart';
 import 'package:tasky/model/task_model.dart';
 import '../../../core/constances/storage_kay.dart' show StorageKay;
 
@@ -24,9 +24,8 @@ class TasksController with ChangeNotifier {
   void _loudTasks() async {
     isLoading = true;
 
-    final tasksData = await FileStorageManager().loadTasks();
+    tasks =  HiveStorageManager().loadTasks();
 
-    tasks = tasksData.map((element) => TaskModel.fromjson(element)).toList();
 
     _loadData();
     calculatePercent();
@@ -36,7 +35,7 @@ class TasksController with ChangeNotifier {
   }
 
   void _loadData() async {
-    await FileStorageManager().loadTasks();
+    await HiveStorageManager().loadTasks();
     todoTasks = tasks.where((element) => !element.isDone).toList();
     completeTasks = tasks.where((element) => element.isDone).toList();
 
@@ -50,8 +49,7 @@ class TasksController with ChangeNotifier {
   void doneTask(bool? value, int? index) async {
     tasks[index!].isDone = value ?? false;
     calculatePercent();
-    final updatedTask = tasks.map((element) => element.toJson()).toList();
-    FileStorageManager().SaveTasks(updatedTask);
+    HiveStorageManager().SaveTasks(tasks);
 
     notifyListeners();
   }
@@ -65,7 +63,7 @@ class TasksController with ChangeNotifier {
       (e) => e.taskName == todoTasks[index].taskName,
     );
     tasks[newIndex] = todoTasks[index];
-    FileStorageManager().SaveTasks(tasks);
+    HiveStorageManager().SaveTasks(tasks);
     _loudTasks();
   }
 
@@ -78,7 +76,7 @@ class TasksController with ChangeNotifier {
       (e) => e.taskName == completeTasks[index].taskName,
     );
     tasks[newIndex] = completeTasks[index];
-    FileStorageManager().SaveTasks(tasks);
+    HiveStorageManager().SaveTasks(tasks);
     _loudTasks();
   }
 
@@ -92,7 +90,7 @@ class TasksController with ChangeNotifier {
     );
     tasks[newIndex] = HighPriorityTasks[index];
 
-    FileStorageManager().SaveTasks(tasks);
+    HiveStorageManager().SaveTasks(tasks);
     _loudTasks();
   }
 
@@ -106,8 +104,7 @@ class TasksController with ChangeNotifier {
     _loudTasks();
     calculatePercent();
 
-    final updatedTask = todoTasks.map((element) => element.toJson()).toList();
-    FileStorageManager().SaveTasks(updatedTask);
+    HiveStorageManager().SaveTasks(tasks);
 
     notifyListeners();
   }
@@ -118,5 +115,8 @@ class TasksController with ChangeNotifier {
     percent = totalTask == 0 ? 0 : totaldoneTasks / totalTask;
 
     notifyListeners();
+  }
+  clearTasks(){
+    _loudTasks();
   }
 }

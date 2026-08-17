@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
-import 'package:tasky/core/services/file_storage_manager.dart';
+import 'package:tasky/core/services/hive_storage_manager.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/dark_theme.dart';
 import 'package:tasky/core/theme/light_theme.dart';
@@ -13,11 +13,17 @@ import 'package:tasky/features/welcome/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print("start preferences");
   await PreferencesMangar().init();
+  print("start theme");
   await ThemeController().init();
-  await FileStorageManager().init();
+  print("start hive");
+  await HiveStorageManager().init();
+  print("before username");
 
   String? username = await PreferencesMangar().getString(StorageKay.username,);
+  print("before runApp");
+
   runApp(MyApp(username: username));
 }
 

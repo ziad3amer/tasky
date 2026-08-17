@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
 import 'package:tasky/core/enums/task_item_actions_enum.dart';
-import 'package:tasky/core/services/file_storage_manager.dart';
+import 'package:tasky/core/services/hive_storage_manager.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custtom_text_form_field.dart';
@@ -217,7 +217,7 @@ class TaskItemWidget extends StatelessWidget {
                       style: ElevatedButton.styleFrom(fixedSize: Size(450, 40)),
                       onPressed: () async {
                         if (_kay.currentState?.validate() ?? false) {
-                          List<dynamic> listTasks = await FileStorageManager()
+                          List<TaskModel> listTasks =  HiveStorageManager()
                               .loadTasks();
                           TaskModel newModel = TaskModel(
                             id: model.id,
@@ -228,17 +228,11 @@ class TaskItemWidget extends StatelessWidget {
                           );
 
                           final item = listTasks.firstWhere(
-                            (e) => e['id'] == model.id,
+                            (e) => e.id == model.id,
                           );
                           final int index = listTasks.indexOf(item);
                           listTasks[index] = newModel;
-
-                          final taskEncode = jsonEncode(listTasks);
-                          await PreferencesMangar().setString(
-                            StorageKay.tasks,
-                            taskEncode,
-                          );
-
+                          await HiveStorageManager().SaveTasks(listTasks);
                           Navigator.of(context).pop(true);
                         }
                       },

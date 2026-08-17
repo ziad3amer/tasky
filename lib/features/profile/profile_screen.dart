@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/constances/app_sizes.dart';
 import 'package:tasky/core/constances/storage_kay.dart';
+import 'package:tasky/core/services/hive_storage_manager.dart';
 import 'package:tasky/core/services/preferences_mangar.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custtom_svg_picture.dart';
+import 'package:tasky/features/tasks/controller/tasks_controller.dart';
 import 'package:tasky/main.dart';
 import 'package:tasky/features/profile/user_detials_screen.dart';
 import 'package:tasky/features/welcome/welcome_screen.dart';
@@ -184,9 +187,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Divider(thickness: 1),
           ListTile(
             onTap: () async {
+              await HiveStorageManager().clear();
+              context.read<TasksController>().clearTasks();
               PreferencesMangar().remove(StorageKay.username);
               PreferencesMangar().remove(StorageKay.MotivationQuote);
-              PreferencesMangar().remove(StorageKay.tasks);
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
