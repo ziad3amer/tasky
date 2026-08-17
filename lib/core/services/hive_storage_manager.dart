@@ -18,9 +18,10 @@ class HiveStorageManager {
 
   //mn hena 3maeyt el initialization
   init() async {
-    Hive.initFlutter();
+    await Hive.initFlutter();
     Hive.registerAdapter(TaskModelAdapter());
-    _taskBox=Hive.box<TaskModel>(Constants.taskNameCollection);
+
+    _taskBox=await Hive.openBox<TaskModel>(Constants.taskNameCollection);
 
   }
 
